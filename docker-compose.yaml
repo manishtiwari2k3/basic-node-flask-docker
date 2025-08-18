@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    image: manishtiwari2k3/basic-flask-backend:1.0
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    image: manishtiwari2k3/basic-express-frontend:1.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      # inside Docker network, the backend is reachable by service name "backend"
+      API_BASE_URL: "http://backend:5000"
